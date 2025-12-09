@@ -1,0 +1,11 @@
+# Ignore environment file
+.env
+
+
+
+# Byte-compiled / Python cache files
+__pycache__/
+*.py[cod]
+
+# OS files
+.DS_Store
