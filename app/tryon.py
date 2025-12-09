@@ -2,7 +2,7 @@ import io
 from PIL import Image
 from google.genai import types
 from app.gemini_client import get_gemini_client
-
+client = get_gemini_client()
 PROMPT = """
 # **Full-Body Dress Replacement Prompt (Strict Clothing Removal + Dress-Only Output)**
 
@@ -103,7 +103,7 @@ Before producing the final output, verify ALL of the following:
 """
 
 def run_tryon(model_file_path: str, garment_file_path: str):
-    client = get_gemini_client()
+    
 
     # Upload both files to Gemini
     model_file = client.files.upload(file=model_file_path)
@@ -127,6 +127,8 @@ def run_tryon(model_file_path: str, garment_file_path: str):
             if part.inline_data and "image" in part.inline_data.mime_type:
                 image_bytes = part.inline_data.data  # already raw bytes
                 break
+        if image_bytes:
+            break
     
     if not image_bytes:
         raise Exception("❌ Gemini returned no image. Full response:\n" + str(response))
